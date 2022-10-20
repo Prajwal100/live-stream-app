@@ -1,10 +1,17 @@
 import React from "react";
-import { AppHeader } from "../components";
+import { AppContent, AppHeader, AppSidebar } from "../components";
 
 const DefaultLayout = () => {
   return (
     <div>
       <AppHeader />
+      <div id="wrapper">
+        {/* <!-- Sidebar --> */}
+        <AppSidebar />
+
+        {/* <!-- /.content-wrapper --> */}
+        <AppContent />
+      </div>
     </div>
   );
 };

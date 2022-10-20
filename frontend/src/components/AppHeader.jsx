@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AppHeader = () => {
   return (
@@ -12,7 +13,7 @@ const AppHeader = () => {
       </button>{" "}
       &nbsp;&nbsp;
       <a className="navbar-brand mr-1" href="index.html">
-        <img className="img-fluid" alt="" src="img/logo.png" />
+        <img className="img-fluid" alt="" src="/assets/img/logo.png" />
       </a>
       {/* Navbar Search */}
       <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
@@ -32,10 +33,10 @@ const AppHeader = () => {
       {/* <!-- Navbar --> */}
       <ul className="navbar-nav ml-auto ml-md-0 osahan-right-navbar">
         <li className="nav-item mx-1">
-          <a className="nav-link" href="upload.html">
+          <Link to="/upload" className="nav-link">
             <i className="fas fa-plus-circle fa-fw"></i>
             Upload Video
-          </a>
+          </Link>
         </li>
         <li className="nav-item dropdown no-arrow mx-1">
           <a

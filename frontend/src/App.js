@@ -5,8 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import DefaultLayout from "./layout/DefaultLayout";
 
 // importing routes;
-const LoginPage = React.lazy(() => import("./pages/auth/Login"));
-const RegisterPage = React.lazy(() => import("./pages/auth/Register"));
+const SignIn = React.lazy(() => import("./pages/auth/SignIn"));
+const SignUp = React.lazy(() => import("./pages/auth/SignUp"));
+const Page404 = React.lazy(() => import("./pages/Page404"));
 
 // check auth
 function checkAuth() {
@@ -24,8 +25,9 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={true}>
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            {/* <Route path="/404" element={<Page404 />} /> */}
             <Route
               path="*"
               name="Home"
@@ -33,7 +35,7 @@ function App() {
                 checkAuth() ? (
                   <DefaultLayout />
                 ) : (
-                  <Navigate to={{ pathname: "/login" }} />
+                  <Navigate to={{ pathname: "/signin" }} />
                 )
               }
             />
