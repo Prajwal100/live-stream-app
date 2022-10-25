@@ -35,27 +35,12 @@ const AppSidebar = () => {
        <span>Upload Video</span>
        </a>
     </li>
-    <li className="nav-item dropdown">
-       <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       <i className="fas fa-fw fa-folder"></i>
-       <span>Pages</span>
-       </a>
-       <div className="dropdown-menu">
-          <h6 className="dropdown-header">Login Screens:</h6>
-          <a className="dropdown-item" href="login.html">Login</a>
-          <a className="dropdown-item" href="register.html">Register</a>
-          <a className="dropdown-item" href="forgot-password.html">Forgot Password</a>
-          <div className="dropdown-divider"></div>
-          <h6 className="dropdown-header">Other Pages:</h6>
-          <a className="dropdown-item" href="404.html">404 Page</a>
-          <a className="dropdown-item" href="blank.html">Blank Page</a>
-       </div>
-    </li>
+   
     <li className="nav-item">
-       <a className="nav-link" href="history-page.html">
+       <Link to="/history" className="nav-link">
        <i className="fas fa-fw fa-history"></i>
        <span>History Page</span>
-       </a>
+       </Link>
     </li>
     <li className="nav-item dropdown">
        <a className="nav-link dropdown-toggle" href="categories.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

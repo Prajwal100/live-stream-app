@@ -13,6 +13,8 @@ const SingleChannel = React.lazy(() =>
   import("./pages/channels/singleChannel")
 );
 
+const History = React.lazy(() => import("./pages/history"));
+
 const routes = [
   {
     path: "/",
@@ -41,6 +43,12 @@ const routes = [
     path: "/single-channel",
     name: "SingleChannel",
     element: SingleChannel,
+  },
+
+  {
+    path: "/history",
+    name: "History",
+    element: History,
   },
 
   {
