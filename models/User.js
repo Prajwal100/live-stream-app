@@ -45,18 +45,14 @@ const userSchema = mongoose.Schema({
 });
 
 // Generate token;
-userSchema.methods.getJwtToken = function () {
-  return jwt.sign(
-    { id: this._id, tempid: this.tempid },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "30d",
-    }
-  );
+userSchema.methods.getJwtToken = function (tempId) {
+  return jwt.sign({ id: this._id, tempId: tempId }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
 };
 
 // Check the password;
-userSchema.methods.checkPassword = async (password) => {
+userSchema.methods.checkPassword = async function (password) {
   return await bcrypt.compareSync(password, this.password);
 };
 

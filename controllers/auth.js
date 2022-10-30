@@ -45,7 +45,7 @@ export const signup = async (req, res, next) => {
       tempId,
     });
 
-    const token = user.getJwtToken();
+    const token = user.getJwtToken(tempId);
 
     const { password, ...others } = user;
 
@@ -81,7 +81,7 @@ export const signin = async (req, res, next) => {
     if (!match) {
       res.status(400).json({ ok: false, message: "Password does not match." });
     }
-    const token = user.getJwtToken();
+    const token = user.getJwtToken(user.tempId);
 
     return res
       .cookie("accessToken", token, {
@@ -91,5 +91,21 @@ export const signin = async (req, res, next) => {
       .json(user);
   } catch (err) {
     res.status(400).send({ ok: false, message: err });
+  }
+};
+
+export const me = async (req, res, next) => {
+  try {
+    console.log("me", req.user);
+    const { _id, name, username, email, avatar } = req.user;
+    res
+      .status(200)
+      .send({
+        ok: true,
+        data: { _id, name, username, email, avatar },
+        subscribedTo: req.user.subscribedTo,
+      });
+  } catch (e) {
+    res.status(404).send({ ok: false, message: e });
   }
 };

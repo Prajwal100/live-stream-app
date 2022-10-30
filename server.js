@@ -2,13 +2,15 @@ import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 import DB from "./utils/db.js";
+import cookieParser from "cookie-parser";
 import * as dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
+app.use(cookieParser());
 app.use(helmet.frameguard({ action: "DENY" }));
 DB();
 
