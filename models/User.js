@@ -1,5 +1,8 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import * as dotenv from "dotenv";
+dotenv.config();
 const userSchema = mongoose.Schema({
   tempId: {
     type: String,
@@ -41,6 +44,22 @@ const userSchema = mongoose.Schema({
   subscribedTo: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
 });
 
+// Generate token;
+userSchema.methods.getJwtToken = function () {
+  return jwt.sign(
+    { id: this._id, tempid: this.tempid },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "30d",
+    }
+  );
+};
+
+// Check the password;
+userSchema.methods.checkPassword = async (password) => {
+  return await bcrypt.compareSync(password, this.password);
+};
+
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+export default User;

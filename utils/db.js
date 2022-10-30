@@ -1,4 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import * as dotenv from "dotenv";
+dotenv.config();
+
 const MONGO_URI = process.env.MONGO_URI;
 const DB = async () => {
   try {
@@ -9,4 +12,4 @@ const DB = async () => {
   }
 };
 
-module.exports = DB;
+export default DB;

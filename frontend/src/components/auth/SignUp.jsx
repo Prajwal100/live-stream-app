@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { Link } from "react-router-dom";
-
+import toast from 'react-hot-toast'
 const SignUpComponent = () => {
     
     const [data,setData]=useState({
@@ -14,6 +14,7 @@ const SignUpComponent = () => {
     
     const handleSubmit=async(e)=>{
         e.preventDefault();
+        toast.success("success")
         
     }
   return (
@@ -78,7 +79,7 @@ const SignUpComponent = () => {
         </div>
         <div className="mt-4">
           <button
-            type="submit"
+            onClick={handleSubmit}
             className="btn btn-outline-primary btn-block btn-lg"
           >
             Sign Up
