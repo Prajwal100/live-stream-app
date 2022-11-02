@@ -98,13 +98,31 @@ export const me = async (req, res, next) => {
   try {
     console.log("me", req.user);
     const { _id, name, username, email, avatar } = req.user;
-    res
-      .status(200)
-      .send({
-        ok: true,
-        data: { _id, name, username, email, avatar },
-        subscribedTo: req.user.subscribedTo,
-      });
+    res.status(200).send({
+      ok: true,
+      data: { _id, name, username, email, avatar },
+      subscribedTo: req.user.subscribedTo,
+    });
+  } catch (e) {
+    res.status(404).send({ ok: false, message: e });
+  }
+};
+
+export const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      res
+        .status(400)
+        .send({ ok: false, message: "Please enter email address." });
+    }
+
+    // checking the user;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      res.status(404).json({ ok: false, message: "User not found." });
+    }
   } catch (e) {
     res.status(404).send({ ok: false, message: e });
   }
