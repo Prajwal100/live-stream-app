@@ -15,7 +15,7 @@ function checkAuth() {
   if (accessToken) {
     return true;
   }
-  return true;
+  return false;
 }
 
 function App() {

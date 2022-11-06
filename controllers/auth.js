@@ -1,6 +1,5 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 export const generateOTP = (n) => {
   let s = 0;
@@ -49,12 +48,14 @@ export const signup = async (req, res, next) => {
 
     const { password, ...others } = user;
 
-    return res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json(others);
+    return (
+      res
+        // .cookie("accessToken", token, {
+        //   httpOnly: true,
+        // })
+        .status(200)
+        .json({ ok: true, data: others, token: token })
+    );
   } catch (err) {
     res.status(400).send({ ok: false, message: err });
   }
@@ -83,12 +84,14 @@ export const signin = async (req, res, next) => {
     }
     const token = user.getJwtToken(user.tempId);
 
-    return res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json(user);
+    return (
+      res
+        // .cookie("accessToken", token, {
+        //   httpOnly: true,
+        // })
+        .status(200)
+        .json({ ok: true, data: user, token: token })
+    );
   } catch (err) {
     res.status(400).send({ ok: false, message: err });
   }
