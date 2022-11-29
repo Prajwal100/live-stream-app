@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+import toast, { Toaster } from "react-hot-toast";
 import DefaultLayout from "./layout/DefaultLayout";
 
 // importing routes;
@@ -21,7 +21,7 @@ function checkAuth() {
 function App() {
   return (
     <>
-      <ToastContainer autoClose={3000} closeButton={false} />
+      <Toaster position="top-right" reverseOrder={false} />
       <BrowserRouter>
         <Suspense fallback={true}>
           <Routes>

@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { Link } from "react-router-dom";
-import toast from 'react-hot-toast'
+import e from "express";
 const SignUpComponent = () => {
     
     const [data,setData]=useState({
@@ -12,9 +12,13 @@ const SignUpComponent = () => {
     
     const [loading,setLoading]=useState(false);
     
+    const handleChange = (e) => {
+      setData((preData)=>({...preData,[e.target.name]:e.target.value}))
+    }
+    
     const handleSubmit=async(e)=>{
         e.preventDefault();
-        toast.success("success")
+        // toast.success("success")
         
     }
   return (
@@ -39,6 +43,7 @@ const SignUpComponent = () => {
                 name="name"
                 className="form-control"
                 placeholder="Enter name"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -52,6 +57,8 @@ const SignUpComponent = () => {
                 type="text"
                 className="form-control"
                 placeholder="Enter username"
+                onChange={handleChange}
+                
               />
             </div>
           </div>
@@ -66,6 +73,8 @@ const SignUpComponent = () => {
             name="email"
             className="form-control"
             placeholder="Enter mobile number"
+            onChange={handleChange}
+            
           />
         </div>
         <div className="form-group">
@@ -75,6 +84,8 @@ const SignUpComponent = () => {
             name="password"
             className="form-control"
             placeholder="Password"
+            onChange={handleChange}
+            
           />
         </div>
         <div className="mt-4">

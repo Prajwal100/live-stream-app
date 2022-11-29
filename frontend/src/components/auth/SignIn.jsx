@@ -1,7 +1,11 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
 const SignInComponent = () => {
+  const [data,setData]=useState({
+    email:"",
+    password:"",
+  })
   return (
     <div class="col-md-5 p-5 bg-white full-height">
     <div class="login-main-left">
@@ -11,7 +15,7 @@ const SignInComponent = () => {
           class="img-fluid"
           alt="LOGO"
         />
-        <h5 class="mt-3 mb-3">Welcome to Vidoe</h5>
+        <h5 class="mt-3 mb-3">Welcome to LiveApp</h5>
         <p>
           It is a long established fact that a reader <br /> will be
           distracted by the readable.
@@ -19,7 +23,7 @@ const SignInComponent = () => {
       </div>
       <form action="https://askbootstrap.com/preview/vidoe-v1-1/index.html">
         <div class="form-group">
-          <label>Mobile number</label>
+          <label>Email Address</label>
           <input
             type="text"
             class="form-control"
