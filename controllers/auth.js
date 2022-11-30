@@ -54,7 +54,7 @@ export const signup = async (req, res, next) => {
         //   httpOnly: true,
         // })
         .status(200)
-        .json({ ok: true, data: others, token: token })
+        .json({ ok: true, data: others, accessToken: token })
     );
   } catch (err) {
     res.status(400).send({ ok: false, message: err });
@@ -90,7 +90,7 @@ export const signin = async (req, res, next) => {
         //   httpOnly: true,
         // })
         .status(200)
-        .json({ ok: true, data: user, token: token })
+        .json({ ok: true, data: user, accessToken: token })
     );
   } catch (err) {
     res.status(400).send({ ok: false, message: err });
