@@ -16,4 +16,42 @@ api.interceptors.request.use(function (config) {
   return config;
 });
 
+api.interceptors.response.use(
+  async (response) => {
+    if (response.status >= 200 && response.status < 300) {
+      let data = response.data;
+      if (data && data.user && data.user.role) {
+        if (data.user.role !== "admin") {
+          localStorage.removeItem("access_token");
+          return Promise.reject({
+            status: "error",
+            message: "User doesn't have permission to access.",
+          });
+        }
+      }
+      return Promise.resolve(response.data);
+    }
+  },
+  async (error) => {
+    console.log(error);
+    if (error && error.message === "Network Error") {
+      console.log(error.message);
+    }
+    const { response, request } = error;
+    if (response) {
+      if (response.status === 401) {
+        localStorage.removeItem("access_token");
+        window.location.href = "/login";
+      }
+
+      if (response.status >= 400 && response.status < 500) {
+        return Promise.reject(response.data);
+      } else if (request) {
+        return null;
+      }
+      return Promise.reject(error);
+    }
+  }
+);
+
 export default api;

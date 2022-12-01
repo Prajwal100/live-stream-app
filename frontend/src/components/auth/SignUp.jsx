@@ -1,8 +1,28 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
-import e from "express";
+import {useSelector,useDispatch} from 'react-redux'
+import {register,reset} from '../../store/slices/auth'
+import {useNavigate} from 'react-router-dom'
+import toast from 'react-hot-toast'
 const SignUpComponent = () => {
+  const navigate=useNavigate()
+  const dispatch = useDispatch()
+  const {user,isLoading,message,isError,isSuccess}=useSelector(state=>state.auth);
+  
+  useEffect(()=>{
+    if(isError){
+      toast.error(message);
+    }
     
+    if(isSuccess || user){
+      navigate('/')
+      toast.success(message);
+    }
+    
+    dispatch(reset());
+    
+    
+  },[user,isError,isSuccess,message,navigate,dispatch])
     const [data,setData]=useState({
         name:"",
         username:"",
@@ -10,15 +30,19 @@ const SignUpComponent = () => {
         password:'',
     });
     
-    const [loading,setLoading]=useState(false);
     
     const handleChange = (e) => {
       setData((preData)=>({...preData,[e.target.name]:e.target.value}))
     }
     
+    const {name,username,email,password}=data;
+    
     const handleSubmit=async(e)=>{
         e.preventDefault();
-        // toast.success("success")
+        
+        const userData={name,username,email,password}
+        
+        dispatch(register(userData))
         
     }
   return (
@@ -43,6 +67,7 @@ const SignUpComponent = () => {
                 name="name"
                 className="form-control"
                 placeholder="Enter name"
+                value={name}
                 onChange={handleChange}
               />
             </div>
@@ -57,6 +82,7 @@ const SignUpComponent = () => {
                 type="text"
                 className="form-control"
                 placeholder="Enter username"
+                value={username}
                 onChange={handleChange}
                 
               />
@@ -73,6 +99,7 @@ const SignUpComponent = () => {
             name="email"
             className="form-control"
             placeholder="Enter mobile number"
+            value={email}
             onChange={handleChange}
             
           />
@@ -84,6 +111,7 @@ const SignUpComponent = () => {
             name="password"
             className="form-control"
             placeholder="Password"
+            value={password}
             onChange={handleChange}
             
           />
