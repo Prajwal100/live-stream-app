@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from 'react-hook-form';
 
 const SignInComponent = () => {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+  
+  const { register, handleSubmit,trigger, watch, formState: { errors } } = useForm();
+  
+  async function onSubmit(data) {
+    console.log(data)
+       try {
+      //  await createUserWithEmailAndPassword(
+      //  auth, data.email, data.password, data.name)
+      //  history.push("/");
+      //  alert ("User Created Successfully")
+       } catch (error) {
+       console.log(error)
+       alert ("User created failed")
+       alert(error);
+     }
+   }
+
   return (
     <div class="col-md-12">
       <div class="login-main-right p-5 mt-5 mb-5">
@@ -15,22 +29,55 @@ const SignInComponent = () => {
             <h5 class="mt-3 mb-3">Welcome to LiveMe</h5>
            
           </div>
-          <form autoComplete="off" action="https://askbootstrap.com/preview/vidoe-v1-1/index.html">
+          <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
             <div class="form-group">
               <label>Email Address  <span className="text-danger">*</span></label>
               <input
-                type="email"
+                id="email"
+                name="email"
+                type= 'email'
+                required={true}
+                {...register("email", {
+                required: "Email is Required!" ,
+                pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address!",
+                }})}
+                error={Boolean(errors.email)}
+                onKeyUp={() => {trigger("email")}}
                 class="form-control"
                 placeholder="Enter email address"
               />
+              {errors.email && (
+                <small className="text-danger">{errors.email.message}</small>
+              )}
             </div>
             <div class="form-group">
               <label>Password  <span className="text-danger">*</span></label>
               <input
                 type="password"
+                {...register("password", {
+                  required: "Password must be required!",
+                  pattern: {
+                  value: '^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){    1,})(?!.*\s).{8,}$',
+                  message: "Password should contain at least one number and one special character"
+                  },
+                 minLength: {
+                 value: 6,
+                 message: "Password must be more than 6 characters"
+                 },
+                 maxLength: {
+                 value: 20,
+                 message: "Password must be less than 20 characters"
+                 },
+                 })}
+                 onKeyUp={() => {trigger("password")}}
                 class="form-control"
                 placeholder="Password"
               />
+              {errors.password && (
+                <small className="text-danger">{errors.password.message}</small>
+              )}
             </div>
             <div class="mt-4">
               <div class="row">

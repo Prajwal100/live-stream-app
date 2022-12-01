@@ -10,7 +10,7 @@ export const generateOTP = (n) => {
   return parseInt(s);
 };
 
-export const signup = async (req, res, next) => {
+export const register = async (req, res, next) => {
   try {
     const { name, username, email } = req.body;
 
@@ -46,22 +46,18 @@ export const signup = async (req, res, next) => {
 
     const token = user.getJwtToken(tempId);
 
-    const { password, ...others } = user;
+    const resUser = user.toObject();
+    delete resUser.password;
 
-    return (
-      res
-        // .cookie("accessToken", token, {
-        //   httpOnly: true,
-        // })
-        .status(200)
-        .json({ ok: true, data: others, accessToken: token })
-    );
+    return res
+      .status(200)
+      .json({ ok: true, data: resUser, accessToken: token });
   } catch (err) {
     res.status(400).send({ ok: false, message: err });
   }
 };
 
-export const signin = async (req, res, next) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -84,13 +80,15 @@ export const signin = async (req, res, next) => {
     }
     const token = user.getJwtToken(user.tempId);
 
+    const resUser = user.toObject();
+    delete resUser.password;
     return (
       res
         // .cookie("accessToken", token, {
         //   httpOnly: true,
         // })
         .status(200)
-        .json({ ok: true, data: user, accessToken: token })
+        .json({ ok: true, data: resUser, accessToken: token })
     );
   } catch (err) {
     res.status(400).send({ ok: false, message: err });

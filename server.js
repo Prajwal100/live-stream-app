@@ -9,6 +9,7 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
 app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
 app.use(cookieParser());
 app.use(helmet.frameguard({ action: "DENY" }));
