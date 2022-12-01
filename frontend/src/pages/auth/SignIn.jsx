@@ -9,8 +9,6 @@ const SignIn = () => {
         <div class="container-fluid pl-0 pr-0">
           <div class="row no-gutters">
             <SignInComponent />
-              <Intro />
-
           </div>
         </div>
       </section>

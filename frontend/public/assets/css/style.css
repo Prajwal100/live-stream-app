@@ -959,18 +959,23 @@ Version: 1.0
 }
 /* Login Pages */
  .login-main-wrapper {
-     background: #ff516b;
-    /* Old browsers */
-     background: -moz-linear-gradient(-45deg, #ff516b 0%, #826cfd 100%);
-    /* FF3.6-15 */
-     background: -webkit-linear-gradient(-45deg, #ff516b 0%,#826cfd 100%);
-    /* Chrome10-25,Safari5.1-6 */
-     background: linear-gradient(135deg, #ff516b 0%,#826cfd 100%);
+    background-image: url('../img/login-bg.webp');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff516b', endColorstr='#826cfd',GradientType=1 );
     /* IE6-9 fallback on horizontal gradient */
-     height: calc(100vh - 0rem);
+     /* height: calc(100vh - 0rem); */
 }
+
+.login-main-wrapper a:hover{
+    color:white;
+}
+
+
+.login-main-wrapper input,.login-main-wrapper input:focus,.login-main-wrapper input::placeholder{color:white;}
+
  .full-height {
      height: calc(100vh - 0rem);
 }
@@ -978,10 +983,15 @@ Version: 1.0
      margin: auto;
      max-width: 335px;
 }
- .login-main-right.bg-white {
-     border-radius: 2px;
+ .login-main-right{
+    border-radius: 8px;
      margin: auto;
      max-width: 561px;
+     background: hsl(0deg 0% 100% / 20%);
+}
+
+.login-main-left-header h5{
+    color:white;
 }
  .carousel-login-card h5 {
      font-size: 18px;

@@ -8,11 +8,7 @@ const SignUp = () => {
        <section class="login-main-wrapper">
          <div class="container-fluid pl-0 pr-0">
             <div class="row no-gutters">
-               <div class="col-md-5 p-5 bg-white full-height">
-                  <SignUpComponent />
-               </div>
-               <Intro />
-
+            <SignUpComponent />
             </div>
          </div>
       </section>
