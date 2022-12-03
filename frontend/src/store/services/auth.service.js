@@ -23,7 +23,7 @@ const login = async (data) => {
     }
     localStorage.setItem("user", JSON.stringify(res.data));
 
-    return res.user;
+    return res;
   } catch (e) {
     return "Something went wrong!";
   }

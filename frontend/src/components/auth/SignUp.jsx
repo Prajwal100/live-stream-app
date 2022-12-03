@@ -1,48 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { register, reset } from "../../store/slices/auth";
-import { useNavigate } from "react-router-dom";
+import { register1, reset } from "../../store/slices/auth";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 const SignUpComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, message, isError, isSuccess } = useSelector(
     (state) => state.auth
   );
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    dispatch(register1(data));
+    navigate("/");
+    
+  };
+
 
   useEffect(() => {
     if (isError) {
       toast.error(message);
+      dispatch(reset());
     }
 
-    if (isSuccess || user) {
-      navigate("/");
-      toast.success(message);
+    if (isSuccess) {
+    toast.success(message);
+    navigate("/");
+      dispatch(reset());
     }
-
-    dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
-  const [data, setData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    setData((preData) => ({ ...preData, [e.target.name]: e.target.value }));
-  };
-
-  const { name, username, email, password } = data;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const userData = { name, username, email, password };
-
-    dispatch(register(userData));
-  };
+  }, [isSuccess, isError]);
   return (
     <div class="col-md-12">
       <div class="login-main-right  p-5 mt-5 mb-5">
@@ -54,9 +47,8 @@ const SignUpComponent = () => {
               alt="LOGO"
             />
             <h5 className="mt-3 mb-3">Welcome to LiveMe</h5>
-          
           </div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
@@ -65,12 +57,19 @@ const SignUpComponent = () => {
                   </label>
                   <input
                     type="text"
+                    {...register("name", {
+                      required: "Enter your name.",
+                    })}
                     name="name"
                     className="form-control"
-                    placeholder="Enter name"
-                    value={name}
-                    onChange={handleChange}
+                    placeholder="Enter you full name"
+                    onKeyUp={() => {
+                      trigger("name");
+                    }}
                   />
+                  {errors.name && (
+                    <small className="text-danger">{errors.name.message}</small>
+                  )}
                 </div>
               </div>
               <div className="col-md-6">
@@ -84,9 +83,18 @@ const SignUpComponent = () => {
                     type="text"
                     className="form-control"
                     placeholder="Enter username"
-                    value={username}
-                    onChange={handleChange}
+                    {...register("username", {
+                      required: "Enter unique username.",
+                    })}
+                    onKeyUp={() => {
+                      trigger("username");
+                    }}
                   />
+                  {errors.username && (
+                    <small className="text-danger">
+                      {errors.username.message}
+                    </small>
+                  )}
                 </div>
               </div>
             </div>
@@ -100,24 +108,52 @@ const SignUpComponent = () => {
                 name="email"
                 className="form-control"
                 placeholder="Enter email address"
-                value={email}
-                onChange={handleChange}
+                {...register("email", {
+                  required: "Enter email address.",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address!",
+                  },
+                })}
+                onKeyUp={() => {
+                  trigger("email");
+                }}
               />
+              {errors.email && (
+                <small className="text-danger">{errors.email.message}</small>
+              )}
             </div>
             <div className="form-group">
-              <label>Password <span className="text-danger">*</span></label>
+              <label>
+                Password <span className="text-danger">*</span>
+              </label>
               <input
                 type="password"
                 name="password"
                 className="form-control"
                 placeholder="Password"
-                value={password}
-                onChange={handleChange}
+                {...register("password", {
+                  required: "Password field is required.",
+                  minLength: {
+                    value: 6,
+                    message: "Please enter at least 6 characters.",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "Please enter at most 20 characters",
+                  },
+                })}
+                onKeyUp={() => {
+                  trigger("password");
+                }}
               />
+              {errors.password && (
+                <small className="text-danger">{errors.password.message}</small>
+              )}
             </div>
             <div className="mt-4">
               <button
-                onClick={handleSubmit}
+                type="submit"
                 className="btn btn-outline-primary btn-block btn-lg"
               >
                 Sign Up

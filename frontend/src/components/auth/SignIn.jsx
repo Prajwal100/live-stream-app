@@ -1,24 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useForm } from 'react-hook-form';
-
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import { login,reset } from "../../store/slices/auth";
+import { toast } from "react-hot-toast";
 const SignInComponent = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {isSuccess,isError,isLoading,message}=useSelector(state=>state.auth);
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors },
+  } = useForm();
+
+ function onSubmit(data) {
+    dispatch(login(data));
+    navigate("/dashboard");
+    
+  }
   
-  const { register, handleSubmit,trigger, watch, formState: { errors } } = useForm();
+  useEffect(() => {
+    return ()=>{
+      dispatch(reset())
+    }
+  },[])
   
-  async function onSubmit(data) {
-    console.log(data)
-       try {
-      //  await createUserWithEmailAndPassword(
-      //  auth, data.email, data.password, data.name)
-      //  history.push("/");
-      //  alert ("User Created Successfully")
-       } catch (error) {
-       console.log(error)
-       alert ("User created failed")
-       alert(error);
-     }
-   }
+  useEffect(() => {
+    if(isSuccess){
+      toast.success(message);
+      navigate("/dashboard");
+      dispatch(reset());
+    }
+    
+    if(isError){
+      toast.error(message);
+      dispatch(reset());
+    }
+  },[isSuccess,isError]);
 
   return (
     <div class="col-md-12">
@@ -27,24 +47,28 @@ const SignInComponent = () => {
           <div class="text-center mb-5 login-main-left-header pt-4">
             <img src="./assets/img/favicon.png" class="img-fluid" alt="LOGO" />
             <h5 class="mt-3 mb-3">Welcome to LiveMe</h5>
-           
           </div>
           <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
             <div class="form-group">
-              <label>Email Address  <span className="text-danger">*</span></label>
+              <label>
+                Email Address <span className="text-danger">*</span>
+              </label>
               <input
                 id="email"
                 name="email"
-                type= 'email'
+                type="email"
                 required={true}
                 {...register("email", {
-                required: "Email is Required!" ,
-                pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address!",
-                }})}
+                  required: "Email is Required!",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address!",
+                  },
+                })}
                 error={Boolean(errors.email)}
-                onKeyUp={() => {trigger("email")}}
+                onKeyUp={() => {
+                  trigger("email");
+                }}
                 class="form-control"
                 placeholder="Enter email address"
               />
@@ -53,25 +77,31 @@ const SignInComponent = () => {
               )}
             </div>
             <div class="form-group">
-              <label>Password  <span className="text-danger">*</span></label>
+              <label>
+                Password <span className="text-danger">*</span>
+              </label>
               <input
                 type="password"
                 {...register("password", {
                   required: "Password must be required!",
                   pattern: {
-                  value: '^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){    1,})(?!.*\s).{8,}$',
-                  message: "Password should contain at least one number and one special character"
+                    value:
+                      "^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[d]){1,})(?=(.*[W]){    1,})(?!.*s).{8,}$",
+                    message:
+                      "Password should contain at least one number and one special character",
                   },
-                 minLength: {
-                 value: 6,
-                 message: "Password must be more than 6 characters"
-                 },
-                 maxLength: {
-                 value: 20,
-                 message: "Password must be less than 20 characters"
-                 },
-                 })}
-                 onKeyUp={() => {trigger("password")}}
+                  minLength: {
+                    value: 6,
+                    message: "Password must be more than 6 characters",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "Password must be less than 20 characters",
+                  },
+                })}
+                onKeyUp={() => {
+                  trigger("password");
+                }}
                 class="form-control"
                 placeholder="Password"
               />

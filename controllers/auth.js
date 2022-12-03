@@ -18,16 +18,13 @@ export const register = async (req, res, next) => {
     const usernameCheck = await User.findOne({ username: username });
 
     if (userEmailCheck) {
-      res.status(400).json({
-        ok: false,
-        message: "Email is already registered.",
-      });
+      return next({ message: "Email is already registered.", statusCode: 400 });
     }
 
     if (usernameCheck) {
-      res.status(400).json({
-        ok: false,
-        message: "Username is already registered.",
+      return next({
+        message: "Username is already registered..",
+        statusCode: 400,
       });
     }
 
@@ -49,9 +46,12 @@ export const register = async (req, res, next) => {
     const resUser = user.toObject();
     delete resUser.password;
 
-    return res
-      .status(200)
-      .json({ ok: true, data: resUser, accessToken: token });
+    return res.status(200).json({
+      ok: true,
+      data: resUser,
+      accessToken: token,
+      message: "Successfully created a user",
+    });
   } catch (err) {
     res.status(400).send({ ok: false, message: err });
   }
@@ -64,7 +64,7 @@ export const login = async (req, res, next) => {
     const user = await User.findOne({ email: email });
 
     if (!user) {
-      res.status(400).json({ ok: false, message: "User not found!" });
+      return next({ message: "User not found", statusCode: 400 });
     }
 
     if (!user.tempId) {
@@ -76,7 +76,7 @@ export const login = async (req, res, next) => {
     const match = user.checkPassword(password);
 
     if (!match) {
-      res.status(400).json({ ok: false, message: "Password does not match." });
+      return next({ message: "Password does not match.", statusCode: 400 });
     }
     const token = user.getJwtToken(user.tempId);
 
@@ -88,7 +88,12 @@ export const login = async (req, res, next) => {
         //   httpOnly: true,
         // })
         .status(200)
-        .json({ ok: true, data: resUser, accessToken: token })
+        .json({
+          ok: true,
+          data: resUser,
+          accessToken: token,
+          message: "Successfully logged in.",
+        })
     );
   } catch (err) {
     res.status(400).send({ ok: false, message: err });

@@ -21,10 +21,14 @@ const SignUp = Loadable({
 
 // check auth
 function checkAuth() {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("access_token");
   if (accessToken) {
+    console.log("acc", accessToken);
+
     return true;
   }
+  console.log("false acc", accessToken);
+
   return false;
 }
 

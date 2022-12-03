@@ -974,7 +974,17 @@ Version: 1.0
 }
 
 
-.login-main-wrapper input,.login-main-wrapper input:focus,.login-main-wrapper input::placeholder{color:white;}
+.login-main-wrapper input,.login-main-wrapper input:focus,.login-main-wrapper input::placeholder{
+    color:white;
+}
+
+.login-main-wrapper input:-webkit-autofill,
+.login-main-wrapper input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+}
+.login-main-wrapper input[data-autocompleted] {
+    background-color: transparent !important;
+}
 
  .full-height {
      height: calc(100vh - 0rem);
