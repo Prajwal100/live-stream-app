@@ -17,27 +17,19 @@ const SignInComponent = () => {
 
  function onSubmit(data) {
     dispatch(login(data));
-    navigate("/dashboard");
-    
   }
   
-  useEffect(() => {
-    return ()=>{
-      dispatch(reset())
-    }
-  },[])
   
   useEffect(() => {
     if(isSuccess){
       toast.success(message);
-      navigate("/dashboard");
-      dispatch(reset());
     }
     
     if(isError){
       toast.error(message);
-      dispatch(reset());
     }
+    dispatch(reset());
+    
   },[isSuccess,isError]);
 
   return (

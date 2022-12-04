@@ -5,7 +5,6 @@ import { register1, reset } from "../../store/slices/auth";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 const SignUpComponent = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, message, isError, isSuccess } = useSelector(
     (state) => state.auth
@@ -19,8 +18,6 @@ const SignUpComponent = () => {
 
   const onSubmit = async (data) => {
     dispatch(register1(data));
-    navigate("/");
-    
   };
 
 
@@ -32,7 +29,6 @@ const SignUpComponent = () => {
 
     if (isSuccess) {
     toast.success(message);
-    navigate("/");
       dispatch(reset());
     }
   }, [isSuccess, isError]);

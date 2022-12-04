@@ -22,6 +22,8 @@ export const register1 = createAsyncThunk(
       if (res.ok) {
         localStorage.setItem("access_token", res.accessToken);
         localStorage.setItem("user", JSON.stringify(res.data));
+        window.location.href = "/dashboard";
+
         return res;
       } else {
         return thunkAPI.rejectWithValue(res);
@@ -45,6 +47,7 @@ export const login = createAsyncThunk(
       if (res.ok) {
         localStorage.setItem("access_token", res.accessToken);
         localStorage.setItem("user", JSON.stringify(res.data));
+        window.location.href = "/dashboard";
         return res;
       } else {
         return thunkAPI.rejectWithValue(res);
@@ -85,7 +88,7 @@ export const authSlice = createSlice({
       .addCase(register1.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.user = null;
-        state.message = payload.message;
+        state.message = payload;
         state.isError = true;
       })
 
@@ -103,7 +106,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isError = true;
-        state.message = payload.message;
+        state.message = payload;
       });
   },
 });

@@ -3,6 +3,7 @@ import helmet from "helmet";
 import cors from "cors";
 import DB from "./utils/db.js";
 import cookieParser from "cookie-parser";
+import errorHandler from "./middlewares/errorHandler.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -19,6 +20,8 @@ DB();
 import auth from "./routes/auth.js";
 app.use("/api/v1/auth", auth);
 // =====================ROUTES ENDS========================
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 

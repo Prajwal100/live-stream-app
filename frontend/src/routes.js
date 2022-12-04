@@ -17,7 +17,7 @@ const History = React.lazy(() => import("./pages/history"));
 
 const routes = [
   {
-    path: "/",
+    path: "/dashboard",
     name: "Dashboard",
     element: Dashboard,
   },

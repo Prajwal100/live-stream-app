@@ -39,9 +39,33 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={true}>
           <Routes>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
+            {/* AUTH ROUTES STARTS */}
+            <Route
+              exact
+              path="/signin"
+              name="signin Page"
+              element={
+                checkAuth() ? (
+                  <Navigate to={{ pathname: "/dashboard" }} />
+                ) : (
+                  <SignIn />
+                )
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                checkAuth() ? (
+                  <Navigate to={{ pathname: "/dashboard" }} />
+                ) : (
+                  <SignUp />
+                )
+              }
+            />
+
+            {/* AUTH ROUTES ENDS */}
             {/* <Route path="/404" element={<Page404 />} /> */}
+
             <Route
               path="*"
               name="Home"
