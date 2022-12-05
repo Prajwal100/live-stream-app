@@ -14,9 +14,16 @@ const videoSchema = new Schema({
     required: true,
   },
   mimetype: String,
-  presenter: {
-    type: Schema.objectId,
-    ref: "USer",
+  presenter: [
+    {
+      type: Schema.objectId,
+      ref: "USer",
+    },
+  ],
+  organizer: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: true,
   },
   views: {
     type: Number,

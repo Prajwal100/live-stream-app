@@ -23,12 +23,8 @@ const SignUp = Loadable({
 function checkAuth() {
   const accessToken = localStorage.getItem("access_token");
   if (accessToken) {
-    console.log("acc", accessToken);
-
     return true;
   }
-  console.log("false acc", accessToken);
-
   return false;
 }
 
@@ -66,6 +62,10 @@ function App() {
             {/* AUTH ROUTES ENDS */}
             {/* <Route path="/404" element={<Page404 />} /> */}
 
+            <Route
+              path="/"
+              element={<Navigate to={{ pathname: "/dashboard" }} />}
+            />
             <Route
               path="*"
               name="Home"

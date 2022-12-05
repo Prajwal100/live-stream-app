@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import {useSelector} from 'react-redux'
 const AppHeader = () => {
+  const {user}=useSelector(state=>state.auth);
   return (
     <nav className="navbar navbar-expand navbar-light bg-white static-top osahan-nav sticky-top">
       &nbsp;&nbsp;
@@ -13,7 +14,8 @@ const AppHeader = () => {
       </button>{" "}
       &nbsp;&nbsp;
       <a className="navbar-brand mr-1" href="index.html">
-        <img className="img-fluid" alt="" src="/assets/img/logo.png" />
+        {/* <img className="img-fluid" alt="" src="/assets/img/logo.png" /> */}
+        <Link to="/"><h5 style={{ margin:"0px" }}>LiveMe</h5></Link>
       </a>
       {/* Navbar Search */}
       <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
@@ -34,8 +36,7 @@ const AppHeader = () => {
       <ul className="navbar-nav ml-auto ml-md-0 osahan-right-navbar">
         <li className="nav-item mx-1">
           <Link to="/upload" className="nav-link">
-            <i className="fas fa-plus-circle fa-fw"></i>
-            Upload Video
+            <i className="fas fa-plus-circle fa-fw" data-toggle="tooltip" data-placement="top" title="Upload Video"></i>
           </Link>
         </li>
         <li className="nav-item dropdown no-arrow mx-1">
@@ -108,8 +109,8 @@ const AppHeader = () => {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <img alt="Avatar" src="./assets/img/user.png" />
-            Prajwal R.
+            <img alt="Avatar" src="./assets/img/user.png" className="mr-1"/>
+            {user ? user.username : null}
           </a>
           <div
             className="dropdown-menu dropdown-menu-right"
