@@ -1,11 +1,19 @@
+  ### IF YOU LIKE IT, GIVE ME A STAR
+
+<hr>
+
 # live-stream-app
 Live streaming application that uses React, Redux, MongoDB, NodeJS, ExpressJS, JWT Authentication, Socket.io, webRTC and many more.
 
 
-<hr>
 
+
+
+  
   [![github-follow](https://img.shields.io/github/followers/Prajwal100?label=Follow&logoColor=purple&style=social)](https://github.com/Prajwal100)
   [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://choosealicense.com/licenses/mit/)
+  
+
 
   ## Prerequisites
 
